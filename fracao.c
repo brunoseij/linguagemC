@@ -7,7 +7,11 @@ struct Fracao {
 typedef struct Fracao Fracao;
 
 Fracao simplificar(Fracao f, int n) {
-    if (f.num / n < 1 || f.den < 1) {
+    if (f.num < 0){
+        if (-n < f.num || n > f.den) {
+            return f;
+        }
+    } else if (n > f.num || n > f.den) {
         return f;
     }
 
@@ -57,6 +61,10 @@ Fracao multiplicar(Fracao f1, Fracao f2) {
 
 Fracao dividir(Fracao f1, Fracao f2) {
     Fracao f3;
+    if (f2.num < 0){
+        f2.den = -f2.den;
+        f2.num = -f2.num;
+    }
     f3.num = f1.num * f2.den;
     f3.den = f1.den * f2.num;
     f3 = simplificar(f3, 2);
@@ -82,7 +90,7 @@ Fracao multiplicar_vetor(Fracao f[], int n_fracoes) {
 void main() {
     Fracao soma, subtracao, multiplicacao, divisao, somaVetor, multVetor;
     Fracao f1, f2, f3;
-    f1.num = 3;
+    f1.num = -3;
     f1.den = 5;
     f2.num = 3;
     f2.den = 20;
